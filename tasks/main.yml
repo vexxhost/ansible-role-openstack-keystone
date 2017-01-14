@@ -10,7 +10,7 @@
     - "{{ __openstack_keystone_dependencies }}"
     - "{{ __openstack_keystone_package_name }}"
 
-- include: "database/{{ openstack_keystone_database_driver }}.yml"
+- include: database.yml
 
 - block:
   # XXX(mnaser): Remove this once RDO publishes updated `openstack-selinux`

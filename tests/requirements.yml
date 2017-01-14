@@ -1,1 +1,5 @@
 - name: vexxhost.openstack-rdo
+  src: https://github.com/vexxhost/ansible-role-openstack-rdo
+
+- name: vexxhost.openstack-oslo
+  src: https://github.com/vexxhost/ansible-role-openstack-oslo
