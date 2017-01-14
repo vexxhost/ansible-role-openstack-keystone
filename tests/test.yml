@@ -25,6 +25,6 @@
 
 - hosts: all
   roles:
-    - role: openstack-keystone
+    - role: ansible-role-openstack-keystone
   tags:
     - keystone
