@@ -63,6 +63,13 @@
       role: "{{ item.role }}"
       project: "{{ item.project }}"
     with_items: "{{ openstack_keystone_user_roles }}"
+  - name: create services
+    os_keystone_service:
+      state: "{{ item.state | default(omit) }}"
+      name: "{{ item.name }}"
+      service_type: "{{ item.type }}"
+      description: "{{ item.description }}"
+    with_items: "{{ openstack_keystone_services }}"
 
   environment:
     OS_USERNAME: "{{ openstack_keystone_admin_username }}"
