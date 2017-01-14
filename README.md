@@ -5,7 +5,13 @@ This role helps install and configure OpenStack Keystone.
 
 Requirements
 ------------
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+This role currently requires the `os_project` and `os_user` modules that ship
+with Ansible.  The `os_user` library has been bundled due to a bug in the
+current version of the module in Ansible, once this bug is resolved, it will no
+longer be bundled.
+
+- https://github.com/ansible/ansible/pull/20259
+
 
 Role Variables
 --------------
