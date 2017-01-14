@@ -1,7 +1,10 @@
 ---
 __openstack_keystone_dependencies:
   - openstack-selinux
+  - python-pip
 
 __openstack_keystone_package_name: openstack-keystone
 __openstack_keystone_config_file: /etc/keystone/keystone.conf
+
+__openstack_keystone_manage_path: /usr/bin/keystone-manage
 ...

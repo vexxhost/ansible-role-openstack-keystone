@@ -4,9 +4,15 @@ openstack_keystone_database_driver: mysql
 openstack_keystone_database_name: keystone
 openstack_keystone_database_username: keystone
 
+openstack_keystone_region_name: RegionOne
+openstack_keystone_admin_username: admin
+openstack_keystone_admin_project: admin
+
 openstack_keystone_manage_httpd: true
 openstack_keystone_httpd_wsgi_template: wsgi-keystone.conf.j2
 openstack_keystone_httpd_wsgi_config: /etc/httpd/conf.d/wsgi-keystone.conf
 
+openstack_keystone_manage_resources: true
 openstack_keystone_projects: []
+openstack_keystone_users: []
 ...

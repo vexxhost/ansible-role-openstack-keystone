@@ -13,6 +13,7 @@
         state: present
     - service:
         name: "{{ item }}"
+        state: started
       with_items:
         - httpd
         - mariadb

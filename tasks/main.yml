@@ -27,13 +27,37 @@
       - reload httpd
   when: openstack_keystone_manage_httpd == True
 
-- name: create keystone projects
-  os_project:
-    auth:
-      auth_url: http://localhost:5000
-      username: admin
-      password: "{{ openstack_keystone_admin_password }}"
-      project_name: admin
-    name: "{{ item }}"
-  with_items: "{{ openstack_keystone_projects }}"
+- meta: flush_handlers
+
+- block:
+  - name: install shade
+    pip:
+      name: shade
+  - name: create projects
+    os_project:
+      state: "{{ item.state | default(omit) }}"
+      description: "{{ item.description | default(omit) }}"
+      domain: "{{ item.domain | default(omit) }}"
+      enabled: "{{ item.enabled | default(omit) }}"
+      name: "{{ item.name }}"
+    with_items: "{{ openstack_keystone_projects }}"
+  - name: create users
+    os_user:
+      state: "{{ item.state | default(omit) }}"
+      domain: "{{ item.domain | default(omit) }}"
+      enabled: "{{ item.enabled | default(omit) }}"
+      name: "{{ item.name }}"
+      password: "{{ item.password }}"
+    with_items: "{{ openstack_keystone_users }}"
+
+  environment:
+    OS_USERNAME: "{{ openstack_keystone_admin_username }}"
+    OS_PASSWORD: "{{ openstack_keystone_admin_password }}"
+    OS_PROJECT_NAME: "{{ openstack_keystone_admin_project }}"
+    OS_USER_DOMAIN_NAME: Default
+    OS_PROJECT_DOMAIN_NAME: Default
+    OS_AUTH_URL: http://localhost:35357/v3
+    OS_IDENTITY_API_VERSION: 3
+  when: openstack_keystone_manage_resources == True
+  tags: openstack-keystone-resources
 ...

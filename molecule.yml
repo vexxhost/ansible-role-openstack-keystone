@@ -6,8 +6,16 @@ ansible:
       - openstack_keystone_database_password: keystone
         openstack_keystone_admin_password: keystone
         openstack_keystone_projects:
-          - project-1
-          - project-2
+          - name: service
+            description: 'Service Project'
+            domain: default
+          - name: demo
+            description: 'Demo Project'
+            domain: default
+        openstack_keystone_users:
+          - name: demo
+            password: foobar
+            domain: default
 dependency:
   name: galaxy
   requirements_file: tests/requirements.yml
