@@ -48,7 +48,20 @@
       enabled: "{{ item.enabled | default(omit) }}"
       name: "{{ item.name }}"
       password: "{{ item.password }}"
+      update_password: "{{ item.update_password | default('on_create') }}"
     with_items: "{{ openstack_keystone_users }}"
+  - name: create roles
+    os_keystone_role:
+      state: "{{ item.state | default(omit) }}"
+      name: "{{ item.name }}"
+    with_items: "{{ openstack_keystone_roles }}"
+  - name: assign user roles
+    os_user_role:
+      state: "{{ item.state | default(omit) }}"
+      user: "{{ item.user }}"
+      role: "{{ item.role }}"
+      project: "{{ item.project }}"
+    with_items: "{{ openstack_keystone_user_roles }}"
 
   environment:
     OS_USERNAME: "{{ openstack_keystone_admin_username }}"
