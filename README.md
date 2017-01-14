@@ -15,7 +15,9 @@ longer be bundled.
 
 Role Variables
 --------------
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+All of the default variables are in the [defaults file](defaults/main.yml),
+there are also some required variables to be set for passwords which you'll
+find in the [testing playbook](tests/test.yml)
 
 
 Dependencies
@@ -30,12 +32,8 @@ automatically when installing via Galaxy.
 
 Example Playbook
 ----------------
-
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+For examples on how to use the module, you can refer to the
+[testing playbook](tests/test.yml) which is ran in order to test the module.
 
 For development and testing, this role uses `molecule`.  You can simply make
 sure that your credentials are properly setup pointing towards an OpenStack
@@ -44,8 +42,9 @@ cloud and run `molecule converge` which will setup the entire environment.
 
 License
 -------
-BSD
+Apache
+
 
 Author Information
 ------------------
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+http://vexxhost.com

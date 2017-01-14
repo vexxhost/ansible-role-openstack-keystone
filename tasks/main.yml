@@ -1,5 +1,6 @@
 ---
-- include_vars: "{{ ansible_os_family }}.yml"
+- name: include operating system variables
+  include_vars: "{{ ansible_os_family }}.yml"
 
 - name: install packages
   yum:

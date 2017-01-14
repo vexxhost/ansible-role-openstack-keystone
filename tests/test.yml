@@ -1,17 +1,20 @@
 ---
 - hosts: all
   tasks:
-    - yum:
+    - name: install keystone deps
+      yum:
         name: "{{ item }}"
         state: present
       with_items:
         - mariadb-server
         - httpd
         - mod_wsgi
-    - apache2_module:
+    - name: enable wsgi
+      apache2_module:
         name: wsgi
         state: present
-    - service:
+    - name: enable services
+      service:
         name: "{{ item }}"
         state: started
       with_items:

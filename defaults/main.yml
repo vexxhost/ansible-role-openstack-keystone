@@ -15,4 +15,6 @@ openstack_keystone_httpd_wsgi_config: /etc/httpd/conf.d/wsgi-keystone.conf
 openstack_keystone_manage_resources: true
 openstack_keystone_projects: []
 openstack_keystone_users: []
+openstack_keystone_roles: []
+openstack_keystone_user_roles: []
 ...
