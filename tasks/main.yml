@@ -10,7 +10,21 @@
     - "{{ __openstack_keystone_dependencies }}"
     - "{{ __openstack_keystone_package_name }}"
 
-- include: "database/{{ openstack_keystone_database_driver }}.yml"
+- name: configure database
+  include_role:
+    name: vexxhost.openstack-oslo
+    tasks_from: db
+  vars:
+    openstack_oslo_db_manage: "{{ openstack_keystone_manage_database }}"
+    openstack_oslo_db_driver: "{{ openstack_keystone_database_driver }}"
+    openstack_oslo_db_name: "{{ openstack_keystone_database_name }}"
+    openstack_oslo_db_username: "{{ openstack_keystone_database_username }}"
+    openstack_oslo_db_password: "{{ openstack_keystone_database_password }}"
+    openstack_oslo_db_config_files:
+      - "{{ __openstack_keystone_config_file }}"
+  notify:
+    - sync keystone database
+    - bootstrap keystone database
 
 - block:
   # XXX(mnaser): Remove this once RDO publishes updated `openstack-selinux`
