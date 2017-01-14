@@ -22,6 +22,10 @@ ansible:
           - user: demo
             role: user
             project: demo
+        openstack_keystone_services:
+          - name: glance
+            type: image
+            description: 'Image Service'
 dependency:
   name: galaxy
   requirements_file: tests/requirements.yml
