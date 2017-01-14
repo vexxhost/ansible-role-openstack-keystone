@@ -3,4 +3,4 @@ cache:
 language: python
 script:
   - git clone https://github.com/vexxhost/molecule-ci-tools.git tools
-  - tools/run-tests.py
+  - tools/run_tests.py
