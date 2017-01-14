@@ -1,0 +1,26 @@
+---
+- hosts: all
+  tasks:
+    - yum:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - mariadb-server
+        - httpd
+        - mod_wsgi
+    - apache2_module:
+        name: wsgi
+        state: present
+    - service:
+        name: "{{ item }}"
+      with_items:
+        - httpd
+        - mariadb
+  tags:
+    - keystone-deps
+
+- hosts: all
+  roles:
+    - role: openstack-keystone
+  tags:
+    - keystone

@@ -1,0 +1,39 @@
+---
+- include_vars: "{{ ansible_os_family }}.yml"
+
+- name: install packages
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_flattened:
+    - "{{ __openstack_keystone_dependencies }}"
+    - "{{ __openstack_keystone_package_name }}"
+
+- include: "database/{{ openstack_keystone_database_driver }}.yml"
+
+- block:
+  # XXX(mnaser): Remove this once RDO publishes updated `openstack-selinux`
+  #              https://bugzilla.redhat.com/show_bug.cgi?id=1402926
+  - name: disable selinux
+    selinux:
+      policy: targeted
+      state: permissive
+
+  - name: configure httpd virtualhost
+    template:
+      src: "{{ openstack_keystone_httpd_wsgi_template }}"
+      dest: "{{ openstack_keystone_httpd_wsgi_config }}"
+    notify:
+      - reload apache
+  when: openstack_keystone_manage_httpd == True
+
+- name: create keystone projects
+  os_project:
+    auth:
+      auth_url: http://localhost:5000
+      username: admin
+      password: "{{ openstack_keystone_admin_password }}"
+      project_name: admin
+    name: "{{ item }}"
+  with_items: "{{ openstack_keystone_projects }}"
+...

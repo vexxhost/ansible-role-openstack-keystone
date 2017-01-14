@@ -1,0 +1,24 @@
+---
+- block:
+  - name: create mysql database
+    mysql_db:
+      name: "{{ openstack_keystone_database_name }}"
+      state: present
+  - name: create mysql user
+    mysql_user:
+      name: "{{ openstack_keystone_database_username }}"
+      password: "{{ openstack_keystone_database_password }}"
+      priv: "{{ openstack_keystone_database_name }}.*:ALL"
+      state: present
+  when: openstack_keystone_manage_database == True
+
+- name: configure keystone database
+  ini_file:
+    dest: "{{ __openstack_keystone_config_file }}"
+    section: database
+    option: connection
+    value: "mysql+pymysql://{{ openstack_keystone_database_username }}:{{ openstack_keystone_database_password }}@localhost/{{ openstack_keystone_database_name }}"
+  notify:
+    - sync keystone database
+    - bootstrap keystone database
+...

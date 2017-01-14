@@ -1,0 +1,11 @@
+---
+- name: sync keystone database
+  command: /usr/bin/keystone-manage db_sync
+
+- name: bootstrap keystone database
+  command: "/usr/bin/keystone-manage bootstrap --bootstrap-password {{ openstack_keystone_admin_password }}"
+
+- name: reload apache
+  service:
+    name: httpd
+    state: reloaded

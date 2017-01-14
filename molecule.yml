@@ -1,0 +1,25 @@
+---
+ansible:
+  playbook: tests/test.yml
+  group_vars:
+    all:
+      - openstack_keystone_database_password: keystone
+        openstack_keystone_admin_password: keystone
+        openstack_keystone_projects:
+          - project-1
+          - project-2
+dependency:
+  name: galaxy
+  requirements_file: tests/requirements.yml
+driver:
+  name: openstack
+openstack:
+  instances:
+    - name: openstack-keystone
+      image: 'CentOS Linux 7 (Core) [2016-09-23]'
+      flavor: v1-standard-8
+      sshuser: centos
+      ansible_groups:
+        - keystone
+verifier:
+  name: testinfra
