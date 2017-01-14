@@ -15,6 +15,8 @@
 - name: sync keystone database
   command: "{{ __openstack_keystone_manage_path }} db_sync"
   when: openstack_oslo_db_config_result.changed
+  tags:
+    - skip_ansible_lint
 
 - name: bootstrap keystone database
   command: "{{ __openstack_keystone_manage_path }} bootstrap"
@@ -26,4 +28,6 @@
     OS_BOOTSTRAP_INTERNAL_URL: http://localhost:5000
     OS_BOOTSTRAP_ADMIN_URL: http://localhost:35357
   when: openstack_oslo_db_config_result.changed
+  tags:
+    - skip_ansible_lint
 ...
