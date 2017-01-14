@@ -1,17 +1,4 @@
 ---
-- name: sync keystone database
-  command: "{{ __openstack_keystone_manage_path }} db_sync"
-
-- name: bootstrap keystone database
-  command: "{{ __openstack_keystone_manage_path }} bootstrap"
-  environment:
-    OS_BOOTSTRAP_PROJECT_NAME: "{{ openstack_keystone_admin_project }}"
-    OS_BOOTSTRAP_USERNAME: "{{ openstack_keystone_admin_username }}"
-    OS_BOOTSTRAP_PASSWORD: "{{ openstack_keystone_admin_password }}"
-    OS_BOOTSTRAP_PUBLIC_URL: http://localhost:5000
-    OS_BOOTSTRAP_INTERNAL_URL: http://localhost:5000
-    OS_BOOTSTRAP_ADMIN_URL: http://localhost:35357
-
 - name: reload httpd
   service:
     name: httpd
