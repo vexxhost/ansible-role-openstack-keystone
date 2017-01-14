@@ -5,7 +5,7 @@
 - name: bootstrap keystone database
   command: "/usr/bin/keystone-manage bootstrap --bootstrap-password {{ openstack_keystone_admin_password }}"
 
-- name: reload apache
+- name: reload httpd
   service:
     name: httpd
     state: reloaded
