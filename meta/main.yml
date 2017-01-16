@@ -17,5 +17,4 @@ galaxy_info:
 
 
 dependencies:
-  - vexxhost.openstack-rdo
   - vexxhost.openstack-oslo

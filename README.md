@@ -24,10 +24,12 @@ Dependencies
 ------------
 This role has the following dependencies:
 
-- `vexxhost.openstack-rdo`
+- `vexxhost.openstack-oslo`
 
 All of those are included as part of the role so they should be included
-automatically when installing via Galaxy.
+automatically when installing via Galaxy.  If you need to install from RDO,
+it's suggested that you add the `vexxhost.openstack-rdo` role to automatically
+install the repos.
 
 
 Example Playbook
