@@ -70,6 +70,14 @@
       service_type: "{{ item.type }}"
       description: "{{ item.description }}"
     with_items: "{{ openstack_keystone_services }}"
+  - name: create endpoints
+    os_keystone_service_endpoint:
+      state: "{{ item.state | default(omit) }}"
+      service: "{{ item.service }}"
+      interface: "{{ item.interface }}"
+      url: "{{ item.url }}"
+      region: "{{ item.region }}"
+    with_items: "{{ openstack_keystone_service_endpoints }}"
 
   environment:
     OS_USERNAME: "{{ openstack_keystone_admin_username }}"

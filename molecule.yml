@@ -26,6 +26,11 @@ ansible:
           - name: glance
             type: image
             description: 'Image Service'
+        openstack_keystone_service_endpoints:
+          - service: glance
+            interface: public
+            url: http://foo.bar
+            region: RegionOne
 dependency:
   name: galaxy
   requirements_file: tests/requirements.yml

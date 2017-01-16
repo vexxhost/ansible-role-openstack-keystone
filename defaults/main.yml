@@ -18,4 +18,5 @@ openstack_keystone_users: []
 openstack_keystone_roles: []
 openstack_keystone_user_roles: []
 openstack_keystone_services: []
+openstack_keystone_service_endpoints: []
 ...
