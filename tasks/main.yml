@@ -20,6 +20,16 @@
       policy: targeted
       state: permissive
 
+  - name: install wsgi module for apache
+    yum:
+      name: mod_wsgi
+      state: present
+
+  - name: enable wsgi module
+    apache2_module:
+      name: wsgi
+      state: present
+
   - name: configure httpd virtualhost
     template:
       src: "{{ openstack_keystone_httpd_wsgi_template }}"
