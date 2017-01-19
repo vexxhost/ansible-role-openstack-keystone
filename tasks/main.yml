@@ -20,7 +20,7 @@
       policy: targeted
       state: permissive
 
-  - name: install keystone deps
+  - name: install mod_wsgi
     yum:
       name: mod_wsgi
       state: present
@@ -36,6 +36,7 @@
       dest: "{{ openstack_keystone_httpd_wsgi_config }}"
     notify:
       - reload httpd
+
   when: openstack_keystone_manage_httpd == True
 
 - meta: flush_handlers
