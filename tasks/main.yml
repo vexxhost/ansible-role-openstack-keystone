@@ -13,71 +13,71 @@
 - include: database.yml
 
 - block:
-  # XXX(mnaser): Remove this once RDO publishes updated `openstack-selinux`
-  #              https://bugzilla.redhat.com/show_bug.cgi?id=1402926
-  - name: disable selinux
-    selinux:
-      policy: targeted
-      state: permissive
+    # XXX(mnaser): Remove this once RDO publishes updated `openstack-selinux`
+    #              https://bugzilla.redhat.com/show_bug.cgi?id=1402926
+    - name: disable selinux
+      selinux:
+        policy: targeted
+        state: permissive
 
-  - name: configure httpd virtualhost
-    template:
-      src: "{{ openstack_keystone_httpd_wsgi_template }}"
-      dest: "{{ openstack_keystone_httpd_wsgi_config }}"
-    notify:
-      - reload httpd
+    - name: configure httpd virtualhost
+      template:
+        src: "{{ openstack_keystone_httpd_wsgi_template }}"
+        dest: "{{ openstack_keystone_httpd_wsgi_config }}"
+      notify:
+        - reload httpd
   when: openstack_keystone_manage_httpd == True
 
 - meta: flush_handlers
 
 - block:
-  - name: install shade
-    pip:
-      name: shade
-  - name: create projects
-    os_project:
-      state: "{{ item.state | default(omit) }}"
-      description: "{{ item.description | default(omit) }}"
-      domain: "{{ item.domain | default(omit) }}"
-      enabled: "{{ item.enabled | default(omit) }}"
-      name: "{{ item.name }}"
-    with_items: "{{ openstack_keystone_projects }}"
-  - name: create users
-    os_user:
-      state: "{{ item.state | default(omit) }}"
-      domain: "{{ item.domain | default(omit) }}"
-      enabled: "{{ item.enabled | default(omit) }}"
-      name: "{{ item.name }}"
-      password: "{{ item.password }}"
-      update_password: "{{ item.update_password | default('on_create') }}"
-    with_items: "{{ openstack_keystone_users }}"
-  - name: create roles
-    os_keystone_role:
-      state: "{{ item.state | default(omit) }}"
-      name: "{{ item.name }}"
-    with_items: "{{ openstack_keystone_roles }}"
-  - name: assign user roles
-    os_user_role:
-      state: "{{ item.state | default(omit) }}"
-      user: "{{ item.user }}"
-      role: "{{ item.role }}"
-      project: "{{ item.project }}"
-    with_items: "{{ openstack_keystone_user_roles }}"
-  - name: create services
-    os_keystone_service:
-      state: "{{ item.state | default(omit) }}"
-      name: "{{ item.name }}"
-      service_type: "{{ item.type }}"
-      description: "{{ item.description }}"
-    with_items: "{{ openstack_keystone_services }}"
-  - name: create endpoints
-    os_keystone_service_endpoint:
-      state: "{{ item.state | default(omit) }}"
-      service: "{{ item.service }}"
-      interface: "{{ item.interface }}"
-      url: "{{ item.url }}"
-      region: "{{ item.region }}"
-    with_items: "{{ openstack_keystone_service_endpoints }}"
+    - name: install shade
+      pip:
+        name: shade
+    - name: create projects
+      os_project:
+        state: "{{ item.state | default(omit) }}"
+        description: "{{ item.description | default(omit) }}"
+        domain: "{{ item.domain | default(omit) }}"
+        enabled: "{{ item.enabled | default(omit) }}"
+        name: "{{ item.name }}"
+      with_items: "{{ openstack_keystone_projects }}"
+    - name: create users
+      os_user:
+        state: "{{ item.state | default(omit) }}"
+        domain: "{{ item.domain | default(omit) }}"
+        enabled: "{{ item.enabled | default(omit) }}"
+        name: "{{ item.name }}"
+        password: "{{ item.password }}"
+        update_password: "{{ item.update_password | default('on_create') }}"
+      with_items: "{{ openstack_keystone_users }}"
+    - name: create roles
+      os_keystone_role:
+        state: "{{ item.state | default(omit) }}"
+        name: "{{ item.name }}"
+      with_items: "{{ openstack_keystone_roles }}"
+    - name: assign user roles
+      os_user_role:
+        state: "{{ item.state | default(omit) }}"
+        user: "{{ item.user }}"
+        role: "{{ item.role }}"
+        project: "{{ item.project }}"
+      with_items: "{{ openstack_keystone_user_roles }}"
+    - name: create services
+      os_keystone_service:
+        state: "{{ item.state | default(omit) }}"
+        name: "{{ item.name }}"
+        service_type: "{{ item.type }}"
+        description: "{{ item.description }}"
+      with_items: "{{ openstack_keystone_services }}"
+    - name: create endpoints
+      os_keystone_service_endpoint:
+        state: "{{ item.state | default(omit) }}"
+        service: "{{ item.service }}"
+        interface: "{{ item.interface }}"
+        url: "{{ item.url }}"
+        region: "{{ item.region }}"
+      with_items: "{{ openstack_keystone_service_endpoints }}"
 
   environment:
     OS_USERNAME: "{{ openstack_keystone_admin_username }}"
