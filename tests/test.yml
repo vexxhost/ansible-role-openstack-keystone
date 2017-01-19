@@ -22,6 +22,6 @@
 - hosts: all
   roles:
     - role: vexxhost.openstack-rdo
-    - role: ansible-role-openstack-keystone
+    - role: ../../
   tags:
     - keystone
