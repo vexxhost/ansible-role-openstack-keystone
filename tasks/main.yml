@@ -101,4 +101,4 @@
     OS_IDENTITY_API_VERSION: 3
   when: openstack_keystone_manage_resources == True
   tags: openstack-keystone-resources
-...
+
