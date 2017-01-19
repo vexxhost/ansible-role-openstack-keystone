@@ -15,27 +15,27 @@
 - block:
     # XXX(mnaser): Remove this once RDO publishes updated `openstack-selinux`
     #              https://bugzilla.redhat.com/show_bug.cgi?id=1402926
-  - name: disable selinux
-    selinux:
-      policy: targeted
-      state: permissive
+    - name: disable selinux
+      selinux:
+        policy: targeted
+        state: permissive
 
-  - name: install mod_wsgi
-    yum:
-      name: mod_wsgi
-      state: present
+    - name: install mod_wsgi
+      yum:
+        name: mod_wsgi
+        state: present
 
-  - name: enable wsgi
-    apache2_module:
-      name: wsgi
-      state: present
+    - name: enable wsgi
+      apache2_module:
+        name: wsgi
+        state: present
 
-  - name: configure httpd virtualhost
-    template:
-      src: "{{ openstack_keystone_httpd_wsgi_template }}"
-      dest: "{{ openstack_keystone_httpd_wsgi_config }}"
-    notify:
-      - reload httpd
+    - name: configure httpd virtualhost
+      template:
+        src: "{{ openstack_keystone_httpd_wsgi_template }}"
+        dest: "{{ openstack_keystone_httpd_wsgi_config }}"
+      notify:
+        - reload httpd
 
   when: openstack_keystone_manage_httpd == True
 
