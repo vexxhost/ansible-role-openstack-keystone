@@ -8,11 +8,11 @@
       with_items:
         - mariadb-server
         - httpd
-        - mod_wsgi
-    - name: enable wsgi
-      apache2_module:
-        name: wsgi
-        state: present
+   #     - mod_wsgi
+    #- name: enable wsgi
+     # apache2_module:
+      #  name: wsgi
+       # state: present
     - name: enable services
       service:
         name: "{{ item }}"
