@@ -35,7 +35,7 @@
         src: "{{ openstack_keystone_httpd_wsgi_template }}"
         dest: "{{ openstack_keystone_httpd_wsgi_config }}"
       notify:
-        - reload httpd
+        - restart httpd
 
   when: openstack_keystone_manage_httpd == True
 
