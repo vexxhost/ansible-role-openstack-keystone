@@ -1,3 +1,4 @@
+---
 galaxy_info:
   author: Mohammed Naser
   description: Role to install OpenStack Keystone
@@ -8,9 +9,9 @@ galaxy_info:
   min_ansible_version: 1.2
 
   platforms:
-  - name: EL
-    versions:
-    - 7
+    - name: EL
+      versions:
+        - 7
 
   galaxy_tags:
     - openstack
